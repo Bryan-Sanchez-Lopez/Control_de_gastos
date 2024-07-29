@@ -47,6 +47,7 @@ public class addExpense extends AppCompatActivity {
 
         Intent intent = getIntent();
         userId = intent.getIntExtra("userId", -1);
+
     }
 
     public void addExpense(View view) {

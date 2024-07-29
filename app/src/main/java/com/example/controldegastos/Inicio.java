@@ -95,7 +95,7 @@ public class Inicio extends AppCompatActivity {
                         Double amount = cursor.getDouble(cursor.getColumnIndexOrThrow("amount"));
 
                         id_income = cursor.getInt(cursor.getColumnIndexOrThrow("income_id"));
-                        incomes.add(id_income+" - "+"   $"+amount+" \n \t\t\t\t\t"+description+"\n");
+                        incomes.add(id_income+" - "+"   $"+amount);
                     }while (cursor.moveToNext());
                 }
                 cursor.close();

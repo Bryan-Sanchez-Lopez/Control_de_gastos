@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -24,6 +25,7 @@ public class Inicio extends AppCompatActivity {
     private double totalIncomes, totalExpenses;
 
     Button verIngresosGenerales, verGastosGenerales, agregarIngreso, agregarGasto;
+    TextView dineroTotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class Inicio extends AppCompatActivity {
         verGastosGenerales = findViewById(R.id.verGastosGenerales);
         agregarIngreso = findViewById(R.id.agregarIngreso);
         agregarGasto = findViewById(R.id.agregarGasto);
+        dineroTotal = findViewById(R.id.dineroTotal);
 
         Intent intent = getIntent();
         userId = intent.getIntExtra("userId", -1);
@@ -51,6 +54,9 @@ public class Inicio extends AppCompatActivity {
 
         totalExpenses = db.getSumOfExpenses(userId);
         verGastosGenerales.setText(totalExpenses+"");
+
+        dineroTotal.setText(totalIncomes-totalExpenses+"");
+
     }
 
     public void agregarIngreso(View view) {
@@ -176,6 +182,8 @@ public class Inicio extends AppCompatActivity {
 
         totalExpenses = db.getSumOfExpenses(userId);
         verGastosGenerales.setText(totalExpenses+"");
+
+        dineroTotal.setText(totalIncomes-totalExpenses+"");
 
     }
 

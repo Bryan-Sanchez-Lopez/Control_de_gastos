@@ -11,15 +11,20 @@ public class dataBase extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "expense_manager.db";
     private static final int DATABASE_VERSION = 1;
 
+
+    //Tablas de la base de datos
     private static final String TABLE_USERS = "users";
     private static final String TABLE_EXPENSES = "expenses";
     private static final String TABLE_INCOMES = "incomes";
 
+
+    //Columnas de las tabla de usuarios
     private static final String COLUMN_USER_ID = "user_id";
     private static final String COLUMN_USERNAME = "username";
     private static final String COLUMN_PASSWORD = "password";
 
 
+    // columnas de las tablas de ingresos y gastos
     private static final String COLUMN_EXPENSE_ID = "expense_id";
     private static final String COLUMN_INCOME_ID = "income_id";
     private static final String COLUMN_AMOUNT = "amount";
@@ -28,6 +33,8 @@ public class dataBase extends SQLiteOpenHelper {
     private static final String COLUMN_DESCRIPTION = "description";
 
 
+
+    //////////////////////////////////////////////////Creacion de las tablas////////////////////////////////////////////////////////////////
     private static final String CREATE_TABLE_USERS = "CREATE TABLE " + TABLE_USERS + " ("
         + COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
         + COLUMN_USERNAME + " TEXT, "
@@ -70,7 +77,9 @@ public class dataBase extends SQLiteOpenHelper {
     }
 
 
+/////////////////////////////////////////////////////////    CRUD DE USUARIOS    ////////////////////////////////////////////////////////////////////////////
 
+    //AGREGAR USUARIO
     public boolean addUser(String username, String password){
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -82,6 +91,7 @@ public class dataBase extends SQLiteOpenHelper {
 
     }
 
+    //LOGIN, VALIDA LAS CREDENCIALES DEL USUARIO Y RETORNA SU ID
     public int loginUserAndGetId(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT "+COLUMN_USER_ID+" FROM "+TABLE_USERS+" WHERE "+COLUMN_USERNAME+" = ? AND "+COLUMN_PASSWORD+ " = ?";
@@ -96,7 +106,10 @@ public class dataBase extends SQLiteOpenHelper {
     }
 
 
-    //CRUD EXPENSES
+    //////////////////////////////////////////////     CRUD DE GASTOS    ////////////////////////////////////////////////////////////////////////
+
+
+    //AGREGAR GASTO
     public boolean addExpense(int userId, double amount, String category, String date, String description, String photoPath) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -109,6 +122,7 @@ public class dataBase extends SQLiteOpenHelper {
         return result != -1;
     }
 
+    //EDITAR GASTO
     public boolean editExpense(int expenseId, double amount, String category, String date, String description, String photoPath) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -121,6 +135,8 @@ public class dataBase extends SQLiteOpenHelper {
         return result != -1;
     }
 
+
+    //ELIMINAR GASTO
     public boolean deleteExpense(int expenseId) {
         SQLiteDatabase db = this.getWritableDatabase();
         long result = db.delete(TABLE_EXPENSES, COLUMN_EXPENSE_ID + "=?", new String[]{String.valueOf(expenseId)});
@@ -129,6 +145,7 @@ public class dataBase extends SQLiteOpenHelper {
     }
 
 
+    //OBTENER EL TOTAL DE GASTOS DE UN USUARIO
     public double getSumOfExpenses(int userId) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT SUM(" + COLUMN_AMOUNT + ") AS total FROM " + TABLE_EXPENSES + " WHERE " + COLUMN_USER_ID + " = ?", new String[]{String.valueOf(userId)});
@@ -143,6 +160,7 @@ public class dataBase extends SQLiteOpenHelper {
     }
 
 
+    //OBTENER TODOS LOS GASTOS DE UN USUARIO
     public Cursor getExpenses(int userId) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_EXPENSES + " WHERE " + COLUMN_USER_ID + " = ?";
@@ -150,6 +168,7 @@ public class dataBase extends SQLiteOpenHelper {
 
     }
 
+    //OBTENER UN GASTO EN ESPECIFICO
     public Cursor getExpense(int expenseId){
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_EXPENSES + " WHERE " + COLUMN_EXPENSE_ID + " = ?";
@@ -159,8 +178,10 @@ public class dataBase extends SQLiteOpenHelper {
 
 
 
-    //CRUD INCOME
+    ///////////////////////////////////////////////    CRUD DE INGRESOS    /////////////////////////////////////////////////////////////////////////
 
+
+    //AGREGAR INGRESO
     public boolean addIncome(int userId, double amount, String date, String description) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -173,6 +194,7 @@ public class dataBase extends SQLiteOpenHelper {
         return result != -1;
     }
 
+    //EDITAR INGRESO
     public boolean editIncome(int incomeId, double amount, String category, String date, String description) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -184,6 +206,7 @@ public class dataBase extends SQLiteOpenHelper {
         return result != -1;
     }
 
+    //ELIMINAR INGRESO
     public boolean deleteIncome(int incomeId) {
         SQLiteDatabase db = this.getWritableDatabase();
         long result = db.delete(TABLE_INCOMES, COLUMN_INCOME_ID + "=?", new String[]{String.valueOf(incomeId)});
@@ -191,6 +214,7 @@ public class dataBase extends SQLiteOpenHelper {
         return result != -1;
     }
 
+    //OBTENER TODOS LOS INGRESOS DE UN USUARIO
     public Cursor getIncomes(int userId) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_INCOMES + " WHERE " + COLUMN_USER_ID + " = ?";
@@ -198,12 +222,14 @@ public class dataBase extends SQLiteOpenHelper {
 
     }
 
+    //OBTENER UN INGRESO EN ESPECIFICO
     public Cursor getIncome(int incomeId){
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_INCOMES + " WHERE " + COLUMN_INCOME_ID + " = ?";
         return db.rawQuery(query, new String[]{String.valueOf(incomeId)});
     }
 
+    //OBTENER LA SUMA DEL TOTAL DE INGRESOS DE UN USUARIO
     public double getSumOfIncomes(int userId) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT SUM(" + COLUMN_AMOUNT + ") AS total FROM " + TABLE_INCOMES + " WHERE " + COLUMN_USER_ID + " = ?", new String[]{String.valueOf(userId)});

@@ -48,11 +48,15 @@ public class MainActivity extends AppCompatActivity {
         register = findViewById(R.id.register);
     }
 
+    //Esta funcion se le agrega al boton de login y envia a la actividad de login
+
     public void login(View view) {
         Intent intent;
         intent = new Intent(this, activityLogin.class);
         startActivity(intent);
     }
+
+    //Esta funcion se le agrega al boton de register y envia a la actividad de register
 
     public void register(View view) {
         Intent intent;

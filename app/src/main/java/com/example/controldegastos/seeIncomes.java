@@ -36,15 +36,21 @@ public class seeIncomes extends AppCompatActivity {
         incomesView = findViewById(R.id.incomes);
 
 
+        // Obtener la lista de ingresos desde el intent
         Intent intent = getIntent();
         ArrayList<String> incomes = intent.getStringArrayListExtra("incomes");
 
 
+        // Crear un adaptador para el ListView
         ArrayAdapter<String> adapterIncomes = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, incomes);
 
+        // Establecer el adaptador en el ListView
         incomesView.setAdapter(adapterIncomes);
 
 
+        // Configurar el escuchador de clics en el ListView
+
+        // se configura el loonge click para eliminar el ingreso
         incomesView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -72,6 +78,7 @@ public class seeIncomes extends AppCompatActivity {
         });
 
 
+        // Configurar el escuchador para ver los detalles del ingreso
         incomesView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override

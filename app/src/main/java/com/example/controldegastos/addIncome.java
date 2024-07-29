@@ -38,6 +38,7 @@ public class addIncome extends AppCompatActivity {
         incomeDescription = findViewById(R.id.incomeDescription);
         incomeDate = findViewById(R.id.incomeDate);
 
+        // Obtener el ID del usuario de la actividad anterior
         Intent intent = getIntent();
         userId = intent.getIntExtra("userId", -1);
 
@@ -45,19 +46,26 @@ public class addIncome extends AppCompatActivity {
     }
 
 
+    // Método para agregar un ingreso
     public void addIncome(View view) {
+
+        // Obtener los valores de los campos de texto
         String amount = incomeAmount.getText().toString();
         String description = incomeDescription.getText().toString();
         String date = incomeDate.getText().toString();
 
+        // Validar que los campos no estén vacíos
         if (amount.isEmpty() || description.isEmpty() || date.isEmpty()) {
             Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
         }
         else{
+            //Validamos que el usuario exista
             if(userId != -1) {
+                //Valida si no se pudo agregar el ingreso
                 if (!db.addIncome(userId, Float.parseFloat(amount), date, description)){
                     Toast.makeText(this, "Error al agregar el ingreso", Toast.LENGTH_SHORT).show();
                 } else {
+                    // Si se pudo agregar el ingreso, mostrar un mensaje de éxito y volver a la actividad anterior
                     Toast.makeText(this, "Ingreso agregado correctamente", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(this, Inicio.class);
                     finish();

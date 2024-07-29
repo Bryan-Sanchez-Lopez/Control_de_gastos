@@ -36,15 +36,21 @@ public class seeExpenses extends AppCompatActivity {
         expensesView = findViewById(R.id.expenses);
 
 
+        // Obtener la lista de gastos desde el intent
         Intent intent = getIntent();
         ArrayList<String> expenses = intent.getStringArrayListExtra("expenses");
 
 
+        // Crear un adaptador para la lista de gastos
         ArrayAdapter<String> adapterExpenses = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, expenses);
 
+        // Establecer el adaptador en la lista de gastos
         expensesView.setAdapter(adapterExpenses);
 
 
+        // Configurar el escuchador de clics en la lista de gastos
+
+        //Se configura el loong click para eliminar un gasto
         expensesView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -74,6 +80,8 @@ public class seeExpenses extends AppCompatActivity {
 
         });
 
+
+        //Se configura el click para ver los detalles del gasto
         expensesView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
         @Override

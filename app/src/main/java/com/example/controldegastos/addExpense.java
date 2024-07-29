@@ -75,9 +75,9 @@ public class addExpense extends AppCompatActivity {
             } else {
                 if (userId != -1) {
                     if (!db.addExpense(userId, Float.parseFloat(amount), category, date, description, "")) {
-                        Toast.makeText(this, "Error al agregar el ingreso", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Error al agregar el gasto", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(this, "Ingreso agregado correctamente", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Gasto agregado correctamente", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(this, Inicio.class);
                         finish();
                     }
